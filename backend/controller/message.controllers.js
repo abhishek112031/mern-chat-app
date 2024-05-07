@@ -28,12 +28,34 @@ export const sendMessage=async(req,res,next)=>{
       conversation.messages.push(newMessage._id);
 
     }
-    await conversation.save();
-    await newMessage.save();
+
+    //socket io:
+
+    await Promise.all(conversation.save(),newMessage.save());
 
     res.status(201).json(newMessage)
     
    } catch (error) {
+
+    res.status.json(500).json({error:"internal server error"})
     
    }
+}
+
+export const getMessages=async(req,res,next)=>{
+  try {
+
+    const receiverId=new mongoose.Types.ObjectId(req.params.id) ;
+    const senderId=req.user._id;
+
+    const conversation=await Conversation.findOne({
+      participants:{$all:[receiverId,senderId]}
+    }).populate('messages');
+
+    res.status(200).json(conversation.messages);
+    
+  } catch (error) {
+    res.status.json(500).json({error:"internal server error"})
+    
+  }
 }

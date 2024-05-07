@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.routes.js";
 import messageRoute from "./routes/message.routes.js";
+import userRoute from "./routes/user.routes.js";
 import connectTOMongoDB from "./db/connectionMongoDb.js";
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use ("/api/messages",messageRoute)
+app.use ("/api/users",userRoute)
+
+// userRoute
 
 app.listen(process.env.PORT, () => {
   connectTOMongoDB()

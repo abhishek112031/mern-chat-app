@@ -13,7 +13,7 @@ export const signup = async (req, res, next) => {
     }
     const isExist = await User.findOne({ userName: userName });
     if (isExist) {
-      return res.status(400).json({ error: "user alresdy exist!!" });
+      return res.status(400).json({ error: "user alresdy exist!!",statusCode:400});
     }
 
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
@@ -39,10 +39,10 @@ export const signup = async (req, res, next) => {
 
       return res
         .status(201)
-        .json({ message: "successfully created user!", user: newUser });
+        .json({ message: "successfully created user!", user: newUser,statusCode:201 });
     }
   } catch (err) {
-    res.status(500).json({ message: "error creating user", err: err });
+    res.status(500).json({ message: "error creating user", err: err,statusCode:500 });
   }
 };
 

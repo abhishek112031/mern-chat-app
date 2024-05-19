@@ -71,6 +71,6 @@ export const logout = async (req, res, next) => {
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ message: "logout successful" });
   } catch (error) {
-    res.status(500).json({ message: "error in logging out" });
+    res.status(500).json({ error: "error in logging out" });
   }
 };

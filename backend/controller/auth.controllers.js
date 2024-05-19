@@ -49,6 +49,8 @@ export const signup = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { userName, password } = req.body;
+
+
     const user = await User.findOne({ userName });
     const isCorrectPawwword = await bcrypt.compare(
       password,
@@ -56,21 +58,21 @@ export const login = async (req, res, next) => {
     );
 
     if (!user || !isCorrectPawwword) {
-      return res.status(400).json({ message: "invalid credentials" });
+      return res.status(400).json({ error: "invalid User Name or Password!" });
     }
     await generateTokenAndSetCookies(user._id.toString(), res);
 
-    res.status(200).json({ message: "login successful", user: user });
+    res.status(200).json({statusCode:200, message: "login successful", user: user });
   } catch (err) {
-    res.status(500).json({ message: "error logging in", err: err });
+    res.status(500).json({ error: "error logging in", err: err });
   }
 };
 
 export const logout = async (req, res, next) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
-    res.status(200).json({ message: "logout successful" });
+    res.status(200).json({statusCode:200, message: "logout successful" });
   } catch (error) {
-    res.status(500).json({ error: "error in logging out" });
+    res.status(500).json({ statusCode:500,error: "error in logging out" });
   }
 };

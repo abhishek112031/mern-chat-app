@@ -1,40 +1,34 @@
 import React, { useState } from "react";
-import GenderCheckbox from "./GenderCheckbox"
+import GenderCheckbox from "./GenderCheckbox";
 import { Link } from "react-router-dom";
 import useSignup from "../../hooks/useSignup";
 
-
 const Signup = () => {
-  const [input,setInput]=useState({
-    fullName:"",
-    userName:"",
-    password:"",
-    confirmPassword:"",
-    gender:"",
-    
-  })
+  const [input, setInput] = useState({
+    fullName: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
 
-  const {loading,signup}=useSignup()
+  const { loading, signup } = useSignup();
 
-  const handleSubmit=async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // console.log(input)
-    await signup (input);
+    await signup(input);
     setInput({
-      fullName:"",
-      userName:"",
-      password:"",
-      confirmPassword:"",
-      gender:"",
-      
-    })
-
-
-  }
-  const checkBoxChangeHandeller=(gender)=>{
-    setInput({...input,gender:gender})
-  }
-
+      fullName: "",
+      userName: "",
+      password: "",
+      confirmPassword: "",
+      gender: "",
+    });
+  };
+  const checkBoxChangeHandeller = (gender) => {
+    setInput({ ...input, gender: gender });
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
@@ -53,7 +47,7 @@ const Signup = () => {
               placeholder="John Doe"
               className="w-full input input-bordered  h-10"
               value={input.fullName}
-              onChange={(e) =>setInput({...input,fullName: e.target.value})}
+              onChange={(e) => setInput({ ...input, fullName: e.target.value })}
             />
           </div>
 
@@ -66,7 +60,7 @@ const Signup = () => {
               placeholder="johndoe"
               className="w-full input input-bordered h-10"
               value={input.userName}
-              onChange={(e) =>setInput({...input,userName: e.target.value})}
+              onChange={(e) => setInput({ ...input, userName: e.target.value })}
             />
           </div>
 
@@ -79,7 +73,7 @@ const Signup = () => {
               placeholder="Enter Password"
               className="w-full input input-bordered h-10"
               value={input.password}
-              onChange={(e) =>setInput({...input,password: e.target.value})}
+              onChange={(e) => setInput({ ...input, password: e.target.value })}
             />
           </div>
 
@@ -92,22 +86,34 @@ const Signup = () => {
               placeholder="Confirm Password"
               className="w-full input input-bordered h-10"
               value={input.confirmPassword}
-              onChange={(e) =>setInput({...input,confirmPassword: e.target.value})}
+              onChange={(e) =>
+                setInput({ ...input, confirmPassword: e.target.value })
+              }
             />
           </div>
 
-          <GenderCheckbox onCheckBoxChange={checkBoxChangeHandeller} selectedGender={input.gender} />
+          <GenderCheckbox
+            onCheckBoxChange={checkBoxChangeHandeller}
+            selectedGender={input.gender}
+          />
 
-          <Link to="/login"
+          <Link
+            to="/login"
             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
-           
           >
             Already have an account?
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2 border border-slate-700">
-              Sign Up
+            <button
+              className="btn btn-block btn-sm mt-2 border border-slate-700"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </div>
         </form>
@@ -117,9 +123,6 @@ const Signup = () => {
 };
 
 export default Signup;
-
-
-
 
 //START UP CODE:
 // const Signup = () => {
@@ -179,7 +182,7 @@ export default Signup;
 
 //           <Link to="/login"
 //             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
-           
+
 //           >
 //             Already have an account?
 //           </Link>

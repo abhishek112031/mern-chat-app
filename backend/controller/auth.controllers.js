@@ -13,7 +13,9 @@ export const signup = async (req, res, next) => {
     }
     const isExist = await User.findOne({ userName: userName });
     if (isExist) {
-      return res.status(400).json({ error: "user alresdy exist!!",statusCode:400});
+      return res
+        .status(400)
+        .json({ error: "user alresdy exist!!", statusCode: 400 });
     }
 
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
@@ -39,10 +41,16 @@ export const signup = async (req, res, next) => {
 
       return res
         .status(201)
-        .json({ message: "successfully created user!", user: newUser,statusCode:201 });
+        .json({
+          message: "successfully created user!",
+          user: newUser,
+          statusCode: 201,
+        });
     }
   } catch (err) {
-    res.status(500).json({ message: "error creating user", err: err,statusCode:500 });
+    res
+      .status(500)
+      .json({ message: "error creating user", err: err, statusCode: 500 });
   }
 };
 
@@ -50,19 +58,24 @@ export const login = async (req, res, next) => {
   try {
     const { userName, password } = req.body;
 
-
     const user = await User.findOne({ userName });
-    const isCorrectPawwword = await bcrypt.compare(
+    const isCorrectPassword = await bcrypt.compare(
       password,
       user?.password || ""
     );
 
-    if (!user || !isCorrectPawwword) {
-      return res.status(400).json({ error: "invalid User Name or Password!" });
+    if (!user ) {
+      return res.status(400).json({ error: "invalid User Name !" });
+    }
+    if(!isCorrectPassword){
+      return res.status(400).json({ error: "invalid  Password!" });
+
     }
     await generateTokenAndSetCookies(user._id.toString(), res);
 
-    res.status(200).json({statusCode:200, message: "login successful", user: user });
+    res
+      .status(200)
+      .json({ statusCode: 200, message: "login successful", user: user });
   } catch (err) {
     res.status(500).json({ error: "error logging in", err: err });
   }
@@ -71,8 +84,8 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
-    res.status(200).json({statusCode:200, message: "logout successful" });
+    res.status(200).json({ statusCode: 200, message: "logout successful" });
   } catch (error) {
-    res.status(500).json({ statusCode:500,error: "error in logging out" });
+    res.status(500).json({ statusCode: 500, error: "error in logging out" });
   }
 };

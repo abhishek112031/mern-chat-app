@@ -7,11 +7,14 @@ export const sendMessage=async(req,res,next)=>{
     const {message}=req.body;
     const receiverId=new mongoose.Types.ObjectId(req.params.id) ;
     const senderId=req.user._id;//current user
-    console.log(message,receiverId,senderId);
+   
 
     const conversation=await Conversation.findOne({
-      participants:{$all:[receiverId,senderId]}
+      participants:{
+        $all:[receiverId,senderId]
+      }
     });
+   
 
     if(!conversation){
       await Conversation.create({
@@ -24,20 +27,20 @@ export const sendMessage=async(req,res,next)=>{
     })
 
     if(newMessage){
-      console.log('new mesage is created!!!')
+  
       conversation.messages.push(newMessage._id);
 
     }
 
     //socket io:
 
-    await Promise.all(conversation.save(),newMessage.save());
+    await Promise.all([conversation.save(),newMessage.save()]);
 
     res.status(201).json(newMessage)
     
    } catch (error) {
 
-    res.status.json(500).json({error:"internal server error"})
+    res.status(500).json({error:"internal server error"})
     
    }
 }
@@ -51,6 +54,7 @@ export const getMessages=async(req,res,next)=>{
     const conversation=await Conversation.findOne({
       participants:{$all:[receiverId,senderId]}
     }).populate('messages');
+    
 
     if(!conversation) return res.status(200).send([])
 

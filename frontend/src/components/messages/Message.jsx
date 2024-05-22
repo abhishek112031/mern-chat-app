@@ -1,6 +1,6 @@
 
 
-const Message = () => {
+const Message = (props) => {
 	return (
 		<div className="chat chat-end">
            <div className="chat-image avatar">
@@ -11,7 +11,7 @@ const Message = () => {
             </div>
 
            </div>
-           <div className={'chat-bubble text-white bg-blue-500 '}> Hi what is up?</div>
+           <div className={'chat-bubble text-white bg-blue-500 '}>{props.msg}</div>
            <div className={'chat-footer opacity-50 text-xs flex gap-1 items-center text-slate-950'}> 12:42</div>
 
           

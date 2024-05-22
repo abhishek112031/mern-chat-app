@@ -1,3 +1,5 @@
+
+import react from 'react';
 import useConversation from "../../zustand/useConversation";
 
 const Conversation = ({ conversation, emoji, lastIndex }) => {

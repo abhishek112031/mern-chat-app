@@ -1,3 +1,4 @@
+import react from 'react';
 import useGetConversations from "../../hooks/useGetConversations";
 import Conversation from "./Conversation";
 import { getRandomEmoji } from "../../utils/emojis";

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSocketContext } from '../context/SocketContext'
 import useConversation from '../zustand/useConversation';
-import nofificationSound from '../assets/sounds/mixkit-elevator-tone-2863.wav'
+import nofificationSound from '../assets/sounds/mixkit-sci-fi-confirmation-914.wav'
 
 const useListenMessages = () => {
     const {socket}=useSocketContext();
